@@ -4,6 +4,7 @@
 use arduino_uno::prelude::*;
 use panic_halt as _;
 
+
 #[arduino_uno::entry]
 fn main() -> ! {
     let dp = arduino_uno::Peripherals::take().unwrap();
@@ -13,18 +14,19 @@ fn main() -> ! {
     // Digital pin 13 is also connected to an onboard LED marked "L"
     let mut led = pins.d13.into_output(&mut pins.ddr);
 
-    let pir_pins = [pins.d8];
-
     led.set_low().void_unwrap();
     let mut motion_countdown: u8 = 0;
     const MOTION_COUNTDOWN_MAX: u8 = 10;
     const SLEEP_TIME_MS:u16 = 500;
+    let d8 = pins.d8.into_pull_up_input(&mut pins.ddr);
+    let d11 = pins.d11.into_pull_up_input(&mut pins.ddr);
+    // let d8 = pins.d8.into_floating_input(&mut pins.ddr);
+    // let d11 = pins.d11.into_floating_input(&mut pins.ddr);
 
     loop {
-        for pir_pin in pir_pins.iter() {
-            if pir_pin.is_high().void_unwrap() {
-                motion_countdown = MOTION_COUNTDOWN_MAX;
-            }
+        if d8.is_high().void_unwrap() || d11.is_high().void_unwrap() {
+        // if d8.is_high().void_unwrap(){
+            motion_countdown = MOTION_COUNTDOWN_MAX;
         }
 
         if motion_countdown == 0 {
