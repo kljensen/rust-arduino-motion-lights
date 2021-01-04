@@ -13,17 +13,32 @@ fn main() -> ! {
     // Digital pin 13 is also connected to an onboard LED marked "L"
     let mut led = pins.d13.into_output(&mut pins.ddr);
 
-    led.set_high().void_unwrap();
+    let pir_pins = [pins.d8];
+
+    led.set_low().void_unwrap();
+    let mut motion_countdown: u8 = 0;
+    const MOTION_COUNTDOWN_MAX: u8 = 10;
+    const SLEEP_TIME_MS:u16 = 500;
 
     loop {
-        led.toggle().void_unwrap();
-        arduino_uno::delay_ms(200);
-        led.toggle().void_unwrap();
-        arduino_uno::delay_ms(200);
-        led.toggle().void_unwrap();
-        arduino_uno::delay_ms(200);
-        led.toggle().void_unwrap();
-        arduino_uno::delay_ms(800);
+        for pir_pin in pir_pins.iter() {
+            if pir_pin.is_high().void_unwrap() {
+                motion_countdown = MOTION_COUNTDOWN_MAX;
+            }
+        }
+
+        if motion_countdown == 0 {
+            // Turn off LED if it is on
+            if led.is_set_high().void_unwrap() {
+                led.set_low().void_unwrap();
+            }
+        } else {
+            // Turn on LED if it is off
+            if led.is_set_low().void_unwrap() {
+                led.set_high().void_unwrap();
+            }
+            motion_countdown -= 1;
+        }
+        arduino_uno::delay_ms(SLEEP_TIME_MS);
     }
 }
-
