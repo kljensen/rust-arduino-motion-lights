@@ -18,13 +18,9 @@ fn main() -> ! {
     let mut motion_countdown: u8 = 0;
     const MOTION_COUNTDOWN_MAX: u8 = 10;
     const SLEEP_TIME_MS:u16 = 500;
-    let d8 = pins.d8.into_pull_up_input(&mut pins.ddr);
-    let d11 = pins.d11.into_pull_up_input(&mut pins.ddr);
-    // let d8 = pins.d8.into_floating_input(&mut pins.ddr);
-    // let d11 = pins.d11.into_floating_input(&mut pins.ddr);
 
     loop {
-        if d8.is_high().void_unwrap() || d11.is_high().void_unwrap() {
+        if pins.d8.is_high().void_unwrap() || pins.d11.is_high().void_unwrap() {
         // if d8.is_high().void_unwrap(){
             motion_countdown = MOTION_COUNTDOWN_MAX;
         }
