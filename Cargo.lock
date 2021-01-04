@@ -136,7 +136,6 @@ name = "rust-arduino-motion-lights"
 version = "0.1.0"
 dependencies = [
  "arduino-uno",
- "embedded-hal",
  "panic-halt",
 ]
 
