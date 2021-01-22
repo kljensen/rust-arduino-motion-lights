@@ -30,6 +30,7 @@ if [ $OS = "Linux" ]; then
     SERIAL_PORT="/dev/ttyACM0"
 elif [ $OS = "Mac" ]; then
     SERIAL_PORT="/dev/cu.usbmodem142101"
+    SERIAL_PORT="/dev/cu.usbserial-A50285BI"
 else
     echo "unsupported OS, things might not work" >&2
     SERIAL_PORT="/dev/ttyACM0"

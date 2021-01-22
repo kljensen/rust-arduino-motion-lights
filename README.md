@@ -36,4 +36,8 @@ here](https://book.avr-rust.com/002.1-installing-required-third-party-tools.html
 
 You might want to edit the `SERIAL_PORT` variable in `uno-runner.sh`. 
 
+## Notes
 
+* I had to [load the
+  bootloader](https://www.arduino.cc/en/Tutorial/BuiltInExamples/ArduinoISP/#toc2)
+  on my Arduino nano knock-offs.
