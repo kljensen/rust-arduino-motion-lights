@@ -23,8 +23,10 @@ fn main() -> ! {
     power_strip.set_high().void_unwrap();
     led.set_low().void_unwrap();
 
-    let mut motion_countdown: u8 = 0;
-    const MOTION_COUNTDOWN_MAX: u8 = 10;
+    let mut motion_countdown: u16 = 0;
+
+    // This will be 300s, or 5 minutes. (600 * 500ms)
+    const MOTION_COUNTDOWN_MAX: u16 = 600;
     const SLEEP_TIME_MS: u16 = 500;
     loop {
         if pins.d8.is_high().void_unwrap() || pins.d11.is_high().void_unwrap() {
